@@ -8,15 +8,17 @@ plugins {
 }
 
 group = "hobigon"
+
 version = "0.0.1-SNAPSHOT"
+
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.security:spring-security-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -30,6 +32,4 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+tasks.withType<Test> { useJUnitPlatform() }
