@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
 }
 
 group = "hobigon"
@@ -23,6 +24,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+}
+
+detekt {
+    config = files("config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+    source = files(".")
+    autoCorrect = true
 }
 
 tasks.withType<KotlinCompile> {
