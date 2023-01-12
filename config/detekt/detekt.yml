@@ -1,2 +1,8 @@
 build: 
   maxIssues: 3
+
+style:
+  ForbiddenComment:
+    active: true
+    values:
+      - 'STOPSHIP:'
