@@ -1,0 +1,8 @@
+FROM gradle:7.6.0-jdk17 AS builder
+WORKDIR /workspace
+COPY . /workspace
+RUN gradle build
+
+FROM openjdk:17
+COPY --from=builder /workspace/build/libs/hobigon-user-box-0.0.1.jar /hobigon-kotlin-api-server.jar
+ENTRYPOINT ["java", "-jar", "hobigon-kotlin-api-server.jar"]
