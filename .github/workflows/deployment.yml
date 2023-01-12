@@ -1,0 +1,96 @@
+name: Deployment
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish_container_image_specified_version:
+    name: Publish container image (specified version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set VERSION environment
+        env:
+          REF: ${{ github.ref }}
+        run: echo "VERSION=${REF##*/}" >> $GITHUB_ENV
+      - name: Set TAG environment
+        run: echo "TAG=${{ secrets.CONTAINER_REGISTORY }}/${{ github.repository }}:${{ env.VERSION }}" >> $GITHUB_ENV
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.CONTAINER_REGISTORY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GCR_PERSONAL_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.TAG }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+  
+  publish_container_image_latest_version:
+    name: Publish container image (latest version)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set TAG environment
+        run: echo "TAG=${{ secrets.CONTAINER_REGISTORY }}/${{ github.repository }}:latest" >> $GITHUB_ENV
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.CONTAINER_REGISTORY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GCR_PERSONAL_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.TAG }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+  success_notification:
+    name: Success notification
+    needs: [publish_container_image_specified_version, publish_container_image_latest_version]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_50 }}
+          SLACK_TITLE: CD Success
+        if: env.WORKFLOW_CONCLUSION == 'success'
+
+  failure_notification:
+    name: Failure notification
+    needs: [publish_container_image_specified_version, publish_container_image_latest_version]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_50 }}
+          SLACK_TITLE: CD Failure
+          SLACK_COLOR: danger
+        if: env.WORKFLOW_CONCLUSION == 'failure'
