@@ -24,7 +24,11 @@ jobs:
 
     - name: Run Detekt
       continue-on-error: true
-      run: detekt-cli --input ${{ github.workspace }} --base-path . --report sarif:${{ github.workspace }}/detekt.sarif.json
+      run: | 
+        detekt-cli --base-path . \
+                   --config ./config/detekt/detekt.yml \
+                   --input ${{ github.workspace }} \
+                   --report sarif:${{ github.workspace }}/detekt.sarif.json
 
     - uses: github/codeql-action/upload-sarif@v2
       with:
