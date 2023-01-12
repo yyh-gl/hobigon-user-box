@@ -1,6 +1,6 @@
 package hobigon.userbox.api.param
 
-import jakarta.validation.constraints.*
+import jakarta.validation.constraints.NotEmpty
 
 data class CreateUserParam(
     @field:NotEmpty(message = "メールアドレスを入力してください") val email: String?,

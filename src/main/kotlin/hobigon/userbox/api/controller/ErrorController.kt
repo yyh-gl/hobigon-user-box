@@ -26,6 +26,8 @@ class ErrorController {
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    // FIXME: ログ出力でeを使うようになったら消す
+    @Suppress("UnusedPrivateMember")
     fun occurOtherException(e: Exception): ErrorView {
         return ErrorView("原因不明のエラーが発生しました")
     }

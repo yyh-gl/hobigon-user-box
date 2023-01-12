@@ -3,9 +3,10 @@ package hobigon.userbox.domain.entity.user
 import hobigon.userbox.domain.entity.shared.InvalidValueException
 import org.springframework.security.crypto.bcrypt.BCrypt
 
+private const val MIN_LENGTH: Int = 8
+private const val MAX_LENGTH: Int = 20
+
 data class Password(val password: String) {
-    private val minLength: Int = 8
-    private val maxLength: Int = 20
     private val salt: String = BCrypt.gensalt()
 
     init {
@@ -15,7 +16,7 @@ data class Password(val password: String) {
     }
 
     private fun validate(): Boolean {
-        return this.password.length in minLength..maxLength
+        return this.password.length in MIN_LENGTH..MAX_LENGTH
     }
 
     fun hash(): String {

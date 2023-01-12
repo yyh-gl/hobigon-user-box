@@ -5,9 +5,5 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class HobigonUserBoxApplicationTests {
-
-    @Test
-    fun contextLoads() {
-    }
-
+    @Suppress("EmptyFunctionBlock") @Test fun contextLoads() {}
 }
