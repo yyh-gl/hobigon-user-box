@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val createUserUseCase: CreateUserUseCase) {
     @PostMapping("")
     fun create(
-        @RequestBody @Validated body: CreateUserParam,
+        @RequestBody @Validated
+        body: CreateUserParam,
     ): UserView {
         val user =
             createUserUseCase.execute(
