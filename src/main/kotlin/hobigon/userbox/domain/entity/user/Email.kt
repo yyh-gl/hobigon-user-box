@@ -2,14 +2,16 @@ package hobigon.userbox.domain.entity.user
 
 import hobigon.userbox.domain.entity.shared.InvalidValueException
 
-data class Email(val email: String) {
+data class Email(val value: String) {
     init {
         if (!this.validate()) {
             throw InvalidValueException("メールアドレスの形式に誤りがあります")
         }
     }
 
+    override fun toString(): String = value
+
     private fun validate(): Boolean {
-        return Regex("^(.+)@(\\S+)\$").matches(this.email)
+        return Regex("^(.+)@(\\S+)\$").matches(this.value)
     }
 }
