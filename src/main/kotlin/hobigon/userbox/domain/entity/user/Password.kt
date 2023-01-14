@@ -7,7 +7,7 @@ private const val MIN_LENGTH: Int = 8
 private const val MAX_LENGTH: Int = 20
 
 data class Password(val password: String) {
-    private val salt: String = BCrypt.gensalt()
+    val salt: String = BCrypt.gensalt()
 
     init {
         if (!this.validate()) {
