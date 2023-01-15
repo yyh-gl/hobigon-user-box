@@ -1,6 +1,7 @@
 package hobigon.userbox.api.controller
 
 import hobigon.userbox.api.view.ErrorView
+import hobigon.userbox.domain.entity.shared.ForbiddenException
 import hobigon.userbox.domain.entity.shared.InvalidValueException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -21,6 +22,12 @@ class ErrorController {
     @ExceptionHandler(InvalidValueException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun badRequestError(e: InvalidValueException): ErrorView {
+        return ErrorView(e.message.toString())
+    }
+
+    @ExceptionHandler(ForbiddenException::class)
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    fun forbiddenError(e: ForbiddenException): ErrorView {
         return ErrorView(e.message.toString())
     }
 

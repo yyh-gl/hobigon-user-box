@@ -1,5 +1,7 @@
 package hobigon.userbox.infrastructure.repository
 
+import hobigon.userbox.domain.entity.user.Email
+import hobigon.userbox.domain.entity.user.ID
 import hobigon.userbox.domain.entity.user.User
 import hobigon.userbox.domain.repository.UserRepository
 import hobigon.userbox.infrastructure.jooq.tables.references.USERS
@@ -33,5 +35,15 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
             .set(USERS.USER_NAME, user.userName)
             .set(USERS.DISPLAY_NAME, user.displayName)
             .execute()
+    }
+
+    override fun findHashedPasswordByEmail(email: Email): String {
+        return dslContext
+            .select(USERS.HASHED_PASSWORD)
+            .from(USERS)
+            .where(USERS.EMAIL.eq(email.toString()))
+            .fetchOne()
+            ?.getValue(USERS.HASHED_PASSWORD)
+            .toString()
     }
 }

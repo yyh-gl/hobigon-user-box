@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt
 private const val MIN_LENGTH: Int = 8
 private const val MAX_LENGTH: Int = 20
 
-data class Password(val password: String) {
+data class Password(val value: String) {
     val salt: String = BCrypt.gensalt()
 
     init {
@@ -16,10 +16,10 @@ data class Password(val password: String) {
     }
 
     private fun validate(): Boolean {
-        return this.password.length in MIN_LENGTH..MAX_LENGTH
+        return this.value.length in MIN_LENGTH..MAX_LENGTH
     }
 
     fun hash(): String {
-        return BCrypt.hashpw(this.password, this.salt)
+        return BCrypt.hashpw(this.value, this.salt)
     }
 }
