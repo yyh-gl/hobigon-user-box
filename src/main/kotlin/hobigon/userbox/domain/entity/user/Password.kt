@@ -9,10 +9,13 @@ private const val MAX_LENGTH: Int = 20
 
 data class Password(
     val plainValue: String? = null,
-    val hashedValue: String? = null,
-    val salt: String = BCrypt.gensalt()
+    private val hashedValue: String? = null,
 ) {
     init {
+        if (plainValue == null && hashedValue == null) {
+            throw InvalidValueException("パスワードに対する不正な操作です")
+        }
+
         if (plainValue != null && !this.validate()) {
             throw InvalidValueException("パスワードは8文字以上、20文字以内で設定してください")
         }
@@ -23,6 +26,7 @@ data class Password(
     }
 
     fun hash(): String {
+        val salt = BCrypt.gensalt()
         return BCrypt.hashpw(plainValue, salt)
     }
 

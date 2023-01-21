@@ -19,7 +19,6 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
                 USERS.ID,
                 USERS.EMAIL,
                 USERS.HASHED_PASSWORD,
-                USERS.SALT,
                 USERS.USER_NAME,
                 USERS.DISPLAY_NAME
             )
@@ -27,12 +26,11 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
                 user.id.value,
                 user.email.value,
                 user.password.hash(),
-                user.password.salt,
                 user.userName,
                 user.displayName
             )
             .onDuplicateKeyUpdate()
-            .set(USERS.EMAIL, user.email.toString())
+            .set(USERS.EMAIL, user.email.value)
             .set(USERS.HASHED_PASSWORD, user.password.hash())
             .set(USERS.USER_NAME, user.userName)
             .set(USERS.DISPLAY_NAME, user.displayName)
@@ -41,7 +39,7 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
 
     override fun fetchByEmail(email: Email): User {
         val record =
-            dslContext.select().from(USERS).where(USERS.EMAIL.eq(email.toString())).fetchOne()
+            dslContext.select().from(USERS).where(USERS.EMAIL.eq(email.value)).fetchOne()
                 ?: throw NotFoundException()
 
         return User(
@@ -50,7 +48,6 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
             password =
                 Password(
                     hashedValue = record.getValue(USERS.HASHED_PASSWORD)!!,
-                    salt = record.getValue(USERS.SALT)!!,
                 ),
             userName = record.getValue(USERS.USER_NAME)!!,
             displayName = record.getValue(USERS.DISPLAY_NAME)!!,

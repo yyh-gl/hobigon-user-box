@@ -9,8 +9,6 @@ data class Email(val value: String) {
         }
     }
 
-    override fun toString(): String = value
-
     private fun validate(): Boolean {
         return Regex("^(.+)@(\\S+)\$").matches(this.value)
     }

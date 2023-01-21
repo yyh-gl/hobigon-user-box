@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS `users` (
     `id`              CHAR(36) NOT NULL PRIMARY KEY,
     `email`           VARCHAR(191) NOT NULL UNIQUE,
     `hashed_password` VARCHAR(191) NOT NULL,
-    `salt`            VARCHAR(191) NOT NULL,
     `user_name`       VARCHAR(191) NOT NULL UNIQUE,
     `display_name`    VARCHAR(191) NOT NULL,
     `created_at`      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
