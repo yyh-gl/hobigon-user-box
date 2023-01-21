@@ -1,7 +1,7 @@
 package hobigon.userbox.api.controller
 
 import hobigon.userbox.api.view.ErrorView
-import hobigon.userbox.domain.entity.shared.ForbiddenException
+import hobigon.userbox.domain.entity.shared.FailedAuthenticationException
 import hobigon.userbox.domain.entity.shared.InvalidValueException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -25,9 +25,9 @@ class ErrorController {
         return ErrorView(e.message.toString())
     }
 
-    @ExceptionHandler(ForbiddenException::class)
-    @ResponseStatus(code = HttpStatus.FORBIDDEN)
-    fun forbiddenError(e: ForbiddenException): ErrorView {
+    @ExceptionHandler(FailedAuthenticationException::class)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    fun unauthorizedError(e: FailedAuthenticationException): ErrorView {
         return ErrorView(e.message.toString())
     }
 
@@ -36,6 +36,9 @@ class ErrorController {
     // FIXME: ログ出力でeを使うようになったら消す
     @Suppress("UnusedPrivateMember")
     fun occurOtherException(e: Exception): ErrorView {
+        println("===================")
+        println(e.message)
+        println("===================")
         return ErrorView("原因不明のエラーが発生しました")
     }
 }

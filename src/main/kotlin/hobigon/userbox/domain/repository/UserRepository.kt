@@ -5,5 +5,5 @@ import hobigon.userbox.domain.entity.user.User
 
 interface UserRepository {
     fun save(user: User)
-    fun findHashedPasswordByEmail(email: Email): String
+    fun fetchByEmail(email: Email): User
 }

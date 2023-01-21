@@ -1,7 +1,9 @@
 package hobigon.userbox.infrastructure.repository
 
+import hobigon.userbox.domain.entity.shared.NotFoundException
 import hobigon.userbox.domain.entity.user.Email
 import hobigon.userbox.domain.entity.user.ID
+import hobigon.userbox.domain.entity.user.Password
 import hobigon.userbox.domain.entity.user.User
 import hobigon.userbox.domain.repository.UserRepository
 import hobigon.userbox.infrastructure.jooq.tables.references.USERS
@@ -22,8 +24,8 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
                 USERS.DISPLAY_NAME
             )
             .values(
-                user.id.toString(),
-                user.email.toString(),
+                user.id.value,
+                user.email.value,
                 user.password.hash(),
                 user.password.salt,
                 user.userName,
@@ -37,13 +39,21 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
             .execute()
     }
 
-    override fun findHashedPasswordByEmail(email: Email): String {
-        return dslContext
-            .select(USERS.HASHED_PASSWORD)
-            .from(USERS)
-            .where(USERS.EMAIL.eq(email.toString()))
-            .fetchOne()
-            ?.getValue(USERS.HASHED_PASSWORD)
-            .toString()
+    override fun fetchByEmail(email: Email): User {
+        val record =
+            dslContext.select().from(USERS).where(USERS.EMAIL.eq(email.toString())).fetchOne()
+                ?: throw NotFoundException()
+
+        return User(
+            id = ID(record.getValue(USERS.ID)!!),
+            email = Email(record.getValue(USERS.EMAIL)!!),
+            password =
+                Password(
+                    hashedValue = record.getValue(USERS.HASHED_PASSWORD)!!,
+                    salt = record.getValue(USERS.SALT)!!,
+                ),
+            userName = record.getValue(USERS.USER_NAME)!!,
+            displayName = record.getValue(USERS.DISPLAY_NAME)!!,
+        )
     }
 }
