@@ -7,4 +7,5 @@ interface UserRepository {
     fun save(user: User)
     fun fetchByEmail(email: Email): User
     fun existsByEmail(email: Email): Boolean
+    fun existsByUserName(userName: String): Boolean
 }
