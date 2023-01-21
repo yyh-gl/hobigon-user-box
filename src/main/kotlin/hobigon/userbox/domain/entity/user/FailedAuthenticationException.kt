@@ -1,3 +1,3 @@
-package hobigon.userbox.domain.entity.shared
+package hobigon.userbox.domain.entity.user
 
 class FailedAuthenticationException(msg: String? = null) : RuntimeException(msg)

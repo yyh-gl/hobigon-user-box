@@ -1,10 +1,10 @@
 package hobigon.userbox.infrastructure.repository
 
-import hobigon.userbox.domain.entity.shared.NotFoundException
 import hobigon.userbox.domain.entity.user.Email
 import hobigon.userbox.domain.entity.user.ID
 import hobigon.userbox.domain.entity.user.Password
 import hobigon.userbox.domain.entity.user.User
+import hobigon.userbox.domain.repository.NotFoundException
 import hobigon.userbox.domain.repository.UserRepository
 import hobigon.userbox.infrastructure.jooq.tables.references.USERS
 import org.jooq.DSLContext

@@ -1,8 +1,8 @@
 package hobigon.userbox.usecase.auth
 
-import hobigon.userbox.domain.entity.shared.FailedAuthenticationException
 import hobigon.userbox.domain.entity.token.Token
 import hobigon.userbox.domain.entity.user.Email
+import hobigon.userbox.domain.entity.user.FailedAuthenticationException
 import hobigon.userbox.domain.repository.UserRepository
 import org.springframework.stereotype.Service
 

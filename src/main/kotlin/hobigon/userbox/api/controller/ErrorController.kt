@@ -1,8 +1,8 @@
 package hobigon.userbox.api.controller
 
 import hobigon.userbox.api.view.ErrorView
-import hobigon.userbox.domain.entity.shared.FailedAuthenticationException
-import hobigon.userbox.domain.entity.shared.InvalidValueException
+import hobigon.userbox.domain.entity.user.FailedAuthenticationException
+import hobigon.userbox.domain.entity.user.InvalidValueException
 import hobigon.userbox.usecase.user.DuplicatedEmailException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException

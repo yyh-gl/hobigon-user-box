@@ -1,11 +1,9 @@
 package hobigon.userbox.domain.entity.user
 
-import hobigon.userbox.domain.entity.shared.FailedAuthenticationException
-import hobigon.userbox.domain.entity.shared.InvalidValueException
 import org.springframework.security.crypto.bcrypt.BCrypt
 
 private const val MIN_LENGTH: Int = 8
-private const val MAX_LENGTH: Int = 20
+private const val MAX_LENGTH: Int = 32
 
 data class Password(
     val plainValue: String? = null,
@@ -17,7 +15,7 @@ data class Password(
         }
 
         if (plainValue != null && !this.validate()) {
-            throw InvalidValueException("パスワードは8文字以上、20文字以内で設定してください")
+            throw InvalidValueException("パスワードは${MIN_LENGTH}文字以上、${MAX_LENGTH}文字以内で設定してください")
         }
     }
 

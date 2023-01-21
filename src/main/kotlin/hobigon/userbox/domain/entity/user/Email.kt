@@ -1,7 +1,5 @@
 package hobigon.userbox.domain.entity.user
 
-import hobigon.userbox.domain.entity.shared.InvalidValueException
-
 data class Email(val value: String) {
     init {
         if (!this.validate()) {
