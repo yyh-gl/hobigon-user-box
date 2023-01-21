@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service
 @Service
 class CreateUserUseCase(val userRepository: UserRepository) {
     fun execute(email: String, password: String, userName: String, displayName: String?): User {
+        if (userRepository.existsByEmail(Email(email))) {
+            throw DuplicatedEmailException(msg = "指定のメールアドレスはすでに使用されています")
+        }
+
         val user =
             User(
                 email = Email(email),

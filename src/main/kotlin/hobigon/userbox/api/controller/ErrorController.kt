@@ -3,6 +3,7 @@ package hobigon.userbox.api.controller
 import hobigon.userbox.api.view.ErrorView
 import hobigon.userbox.domain.entity.shared.FailedAuthenticationException
 import hobigon.userbox.domain.entity.shared.InvalidValueException
+import hobigon.userbox.usecase.user.DuplicatedEmailException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -22,6 +23,12 @@ class ErrorController {
     @ExceptionHandler(InvalidValueException::class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     fun badRequestError(e: InvalidValueException): ErrorView {
+        return ErrorView(e.message.toString())
+    }
+
+    @ExceptionHandler(DuplicatedEmailException::class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    fun unauthorizedError(e: DuplicatedEmailException): ErrorView {
         return ErrorView(e.message.toString())
     }
 

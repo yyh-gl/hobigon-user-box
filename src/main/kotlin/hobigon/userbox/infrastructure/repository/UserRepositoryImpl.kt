@@ -53,4 +53,10 @@ class UserRepositoryImpl(private val dslContext: DSLContext) : UserRepository {
             displayName = record.getValue(USERS.DISPLAY_NAME)!!,
         )
     }
+
+    override fun existsByEmail(email: Email): Boolean {
+        return dslContext.fetchExists(
+            dslContext.selectOne().from(USERS).where(USERS.EMAIL.eq(email.value))
+        )
+    }
 }
