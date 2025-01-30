@@ -12,7 +12,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
     id("nu.studer.jooq") version "8.2.3"
 
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.1.10"
     kotlin("plugin.spring") version "1.9.25"
 }
 
