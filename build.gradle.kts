@@ -7,13 +7,13 @@ version = "0.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 plugins {
-    id("org.springframework.boot") version "3.0.1"
-    id("io.spring.dependency-management") version "1.1.0"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
-    id("nu.studer.jooq") version "8.0"
+    id("org.springframework.boot") version "3.4.2"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
+    id("nu.studer.jooq") version "8.2.3"
 
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
+    kotlin("jvm") version "1.9.25"
+    kotlin("plugin.spring") version "1.9.25"
 }
 
 repositories { mavenCentral() }
@@ -29,14 +29,14 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.auth0:java-jwt:4.2.2")
+    implementation("com.auth0:java-jwt:4.5.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 
     jooqGenerator("mysql:mysql-connector-java")
-    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
+    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
 }
 
 jooq {
