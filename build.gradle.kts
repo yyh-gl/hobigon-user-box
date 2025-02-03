@@ -13,7 +13,7 @@ plugins {
     id("nu.studer.jooq") version "9.0"
 
     kotlin("jvm") version "2.1.10"
-    kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.spring") version "2.1.10"
 }
 
 repositories { mavenCentral() }
