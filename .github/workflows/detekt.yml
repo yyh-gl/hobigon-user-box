@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  DETEKT_RELEASE_TAG: v1.22.0
+  DETEKT_RELEASE_TAG: v1.23.7
 
 permissions:
   security-events: write
@@ -37,3 +37,32 @@ jobs:
     - uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: ${{ github.workspace }}/detekt.sarif.json
+
+  success_notification:
+    name: Success notification
+    needs: [ scan ]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_50 }}
+          SLACK_TITLE: Detekt Scan Success
+        if: env.WORKFLOW_CONCLUSION == 'success'
+
+  failure_notification:
+    name: Failure notification
+    needs: [ scan ]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: rtCamp/action-slack-notify@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_50 }}
+          SLACK_TITLE: Detekt Scan Failure
+          SLACK_COLOR: danger
+        if: env.WORKFLOW_CONCLUSION == 'failure'
