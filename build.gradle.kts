@@ -9,7 +9,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 plugins {
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
-    id("io.gitlab.arturbosch.detekt") version "1.23.7"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
     id("nu.studer.jooq") version "9.0"
 
     kotlin("jvm") version "2.1.10"
@@ -33,7 +33,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
 
     jooqGenerator("mysql:mysql-connector-java")
     jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
