@@ -10,7 +10,7 @@ plugins {
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
-    id("nu.studer.jooq") version "9.0"
+    id("nu.studer.jooq") version "10.0"
 
     kotlin("jvm") version "2.1.10"
     kotlin("plugin.spring") version "2.1.10"
