@@ -1,4 +1,4 @@
-FROM gradle:8.14.1-jdk17 AS builder
+FROM gradle:8.14.2-jdk17 AS builder
 WORKDIR /workspace
 COPY . /workspace
 RUN gradle build
