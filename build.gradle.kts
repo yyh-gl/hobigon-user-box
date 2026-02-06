@@ -36,7 +36,7 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.8")
 
     jooqGenerator("mysql:mysql-connector-java")
-    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
+    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:4.0.5")
 }
 
 jooq {
