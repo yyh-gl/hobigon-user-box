@@ -2,7 +2,7 @@ version: '3.7'
 services:
   db:
     # mysql:8.0（M1 Macのためにダイジェストで指定）
-    image: mysql@sha256:e5dc14f6e01c3e577e669337d2855c6d1561b30d8ef2c592e63e4e8a9a52650a
+    image: mysql@sha256:9b69d1776846f437243ef5b6599e31ef11b317b60babbf37de21dfb38932dbc3
     ports:
       - "13306:3306"
     volumes:
